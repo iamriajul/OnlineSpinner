@@ -15,7 +15,7 @@ allprojects {
 add dependency：
 
 ```java
-	dependencies {
-	        implementation 'com.github.iamriajul:OnlineSpinner:1.0'
-	}
+dependencies {
+        implementation 'com.github.iamriajul:OnlineSpinner:1.0'
+}
 ```
