@@ -2,6 +2,8 @@
 
 help you to implement Spinner view with Online Data support + Searchable + callback and more.
 
+This Library was Inspired by the [Select2](https://select2.org) web library.
+
 Usage:
 ---
 
@@ -36,12 +38,24 @@ Your Activity or Fragment must `ActivityWithOnlineSpinner` interface.
 
 Kotlin
 ---
+Loading Data
+---
 ```kotlin
 // Change dataUrl with your real data url
 example.load(this, "http://example.com/country/all", 5)
 example2.load(this, "http://example.com/language/all", 3, "lang") // custom specified column name
 ```
 
+Getting Selected Item Id (Example On Submit Handle)
+---
+```kotlin
+submitBtn.setOnClickListener{
+    val exampleId = example.getSelectedItemId()
+    val example2Id = example.getSelectedItemId("lang")
+}
+```
+Implementing Callback
+---
 ```kotlin
 override var totalFieldsCount: Int = 2 // Total OnlineSpinner fields in this activity is using
 override var fieldsLoaded: Int = 0 // it should be 0
