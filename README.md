@@ -32,7 +32,14 @@ Not Searchable
 ```
 code:
 
-Your api url must return json, with id, second_column (second_column can be custom specified when using load method or you can leave null to detect automatically) field like this [{"id":"0", "second_column":"Item 1"}, {"id":"1", "second_column":"Item 2"}]
+Your api url must return json, with id, second_column (second_column can be custom specified when using load method or you can leave null to detect automatically) field like this  
+```json
+[
+    {"id":"0", "second_column":"Item 1"},
+    {"id":"1", "second_column":"Item 2"},
+    {"id":"2", "second_column":"Item 3"}
+]
+```
 
 Your Activity or Fragment must `ActivityWithOnlineSpinner` interface.
 
