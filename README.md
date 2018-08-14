@@ -40,6 +40,18 @@ Your api url must return json, with id, second_column (second_column can be cust
     {"id":"2", "second_column":"Item 3"}
 ]
 ```
+####**If you have have multiple column in a row like this**
+ ```json
+ [
+     {"id":"0", "timestamp":"1534216256", "lang": "Arabic"},
+     {"id":"1", "timestamp":"1534216256", "lang": "English"},
+     {"id":"2", "timestamp":"1534216256", "lang": "Bengali"}
+ ]
+ ```
+#####**Then you can specify which column to use in user interface, like this: **
+```kotlin
+example2.load(this, "http://example.com/language/all", 0, "lang") // custom specified column name and selected is Arabic
+```
 
 Your Activity or Fragment must `ActivityWithOnlineSpinner` interface.
 
@@ -50,7 +62,7 @@ Loading Data
 ```kotlin
 // Change dataUrl with your real data url
 example.load(this, "http://example.com/country/all", 5)
-example2.load(this, "http://example.com/language/all", 3, "lang") // custom specified column name
+example2.load(this, "http://example.com/language/all", 0, "lang") // custom specified column name
 ```
 
 Getting Selected Item Id (Example On Submit Handle)
