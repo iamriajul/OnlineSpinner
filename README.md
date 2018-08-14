@@ -50,8 +50,9 @@ Getting Selected Item Id (Example On Submit Handle)
 ---
 ```kotlin
 submitBtn.setOnClickListener{
-    val exampleId = example.getSelectedItemId()
-    val example2Id = example.getSelectedItemId("lang")
+    val exampleId: Int = example.getSelectedItemId()
+    val example2Id: Int = example2.getSelectedItemId("lang")
+    // Here is your data, You can process this data as you want.
 }
 ```
 Implementing Callback
