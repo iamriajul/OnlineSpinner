@@ -105,10 +105,10 @@ example2.load(this, "http://example.com/language/all", 3, "lang") // custom spec
 
 Fields
 ======================
-Name | Description
---- | ---
-`totalFieldsCount: Int` | Count of OnlineSpinner in your current Activity, this field is to help the library to detect if all Spinner loaded or not to trigger `hideLoader()`
-`fieldsLoaded: Int` | This field should be init with 0, It will be incremented by the Library with each OnlineSpinner loaded.
+Name | Type | Description
+--- | --- | ---
+`totalFieldsCount` | Integer | Count of OnlineSpinner in your current Activity, this field is to help the library to detect if all Spinner loaded or not to trigger `hideLoader()`
+`fieldsLoaded` | Integer | This field should be init with 0, It will be incremented by the Library with each OnlineSpinner loaded.
 
 
 Methods
