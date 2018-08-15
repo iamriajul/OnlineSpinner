@@ -56,7 +56,7 @@ example2.load(this, "http://example.com/language/all", 0, "lang") // custom spec
 Your Activity or Fragment must `ActivityWithOnlineSpinner` interface.
 
 Kotlin
----
+======
 Loading Data
 ---
 ```kotlin
@@ -92,7 +92,7 @@ override fun showLoader() {
 ```
 
 Java
----
+======
 ```java
 showLoader()
 OnlineSpinner example = (OnlineSpinner) findViewById(R.id.example);
