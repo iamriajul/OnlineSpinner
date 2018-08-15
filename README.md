@@ -108,7 +108,7 @@ Fields
 Name | Description
 --- | ---
 `totalFieldsCount: Int` | Count of OnlineSpinner in your current Activity, this field is to help the library to detect if all Spinner loaded or not to trigger `hideLoader()`
-fieldsLoaded: Int | This field should be init with 0, It will be incremented by the Library with each OnlineSpinner loaded.
+`fieldsLoaded: Int` | This field should be init with 0, It will be incremented by the Library with each OnlineSpinner loaded.
 
 
 Methods
