@@ -60,9 +60,11 @@ Kotlin
 Loading Data
 ---
 ```kotlin
+showLoader()
 // Change dataUrl with your real data url
 example.load(this, "http://example.com/country/all", 5)
 example2.load(this, "http://example.com/language/all", 0, "lang") // custom specified column name
+// It will call hideLoader when all spinner successfully loaded with data.
 ```
 
 Getting Selected Item Id (Example On Submit Handle)
@@ -92,12 +94,30 @@ override fun showLoader() {
 Java
 ---
 ```java
+showLoader()
 OnlineSpinner example = (OnlineSpinner) findViewById(R.id.example);
 OnlineSpinner example2 = (OnlineSpinner) findViewById(R.id.example2);
 // Change dataUrl with your real data url
 example.load(this, "http://example.com/country/all", 5)
 example2.load(this, "http://example.com/language/all", 3, "lang") // custom specified column name
+// It will call hideLoader when all spinner successfully loaded with data.
 ```
+
+Fields
+======================
+Name | Description
+--- | ---
+`totalFieldsCount: Int` | Count of OnlineSpinner in your current Activity, this field is to help the library to detect if all Spinner loaded or not to trigger `hideLoader()`
+fieldsLoaded: Int | This field should be init with 0, It will be incremented by the Library with each OnlineSpinner loaded.
+
+
+Methods
+======================
+Name | Description
+--- | ---
+`showLoader()` | Call this method once before start calling `OnlineSpinner.load()`
+`hideLoader()` | This method will be called by the Library when all the Spinner loading will complete successfully.
+
 
 dependency
 ---
