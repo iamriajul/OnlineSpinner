@@ -10,6 +10,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import com.github.kittinunf.fuel.android.extension.responseJson
+import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.httpGet
 import org.json.JSONArray
 
@@ -55,10 +56,10 @@ class OnlineSpinner : LinearLayout {
         return -1
     }
 
-    fun load(activity: ActivityWithOnlineSpinner, dataUrl: String, defaultValue: Int? = null, itemName: String? = null) {
+    fun load(activity: ActivityWithOnlineSpinner, request: Request, defaultValue: Int? = null, itemName: String? = null) {
         var itemNameLocal = itemName
         var defaultValueString: String? = null
-        dataUrl.httpGet().responseJson { _, response, result ->
+        request.responseJson { _, response, result ->
             if (response.statusCode == 200) {
                 val data = result.get().array()
                 val items = arrayListOf<String>()
@@ -89,6 +90,14 @@ class OnlineSpinner : LinearLayout {
                 }
             }
         }
+    }
+
+    fun load(activity: ActivityWithOnlineSpinner, dataUrl: String, defaultValue: Int? = null, itemName: String? = null, vararg headers: Pair<String, Any>?) {
+        load(activity, dataUrl.httpGet().header(*headers), defaultValue, itemName)
+    }
+
+    fun load(activity: ActivityWithOnlineSpinner, dataUrl: String, defaultValue: Int? = null, itemName: String? = null) {
+        load(activity, dataUrl.httpGet(), defaultValue, itemName)
     }
 
 
