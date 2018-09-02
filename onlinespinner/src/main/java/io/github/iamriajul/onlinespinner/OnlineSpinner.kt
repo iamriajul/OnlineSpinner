@@ -56,6 +56,8 @@ class OnlineSpinner : LinearLayout {
         return -1
     }
 
+    fun getSelectedItemText() = spinner.selectedItem.toString()
+
     fun load(activity: ActivityWithOnlineSpinner, request: Request, defaultValue: Int? = null, itemName: String? = null) {
         var itemNameLocal = itemName
         var defaultValueString: String? = null
