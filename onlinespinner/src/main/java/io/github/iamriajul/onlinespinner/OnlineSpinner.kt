@@ -5,10 +5,8 @@ import android.support.v7.widget.AppCompatSpinner
 import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
-import android.widget.LinearLayout
-import android.widget.Spinner
-import android.widget.TextView
-import android.widget.Toast
+import android.view.View
+import android.widget.*
 import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.httpGet
@@ -102,6 +100,7 @@ class OnlineSpinner : LinearLayout {
         load(activity, dataUrl.httpGet(), defaultValue, itemName)
     }
 
+    fun setOnItemSelectedListener(listener: AdapterView.OnItemSelectedListener) { spinner.onItemSelectedListener = listener }
 
     fun getSelectedItemId(): Int {
         val data = this.tag as JSONArray
