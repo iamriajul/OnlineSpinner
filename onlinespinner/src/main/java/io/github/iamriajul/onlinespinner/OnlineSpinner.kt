@@ -11,6 +11,7 @@ import com.github.kittinunf.fuel.android.extension.responseJson
 import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.httpGet
 import org.json.JSONArray
+import org.json.JSONObject
 
 private const val TAG = "OnlineSpinner"
 class OnlineSpinner : LinearLayout {
@@ -45,13 +46,22 @@ class OnlineSpinner : LinearLayout {
 
     }
 
-    fun getSelectedItemId(itemName: String? = null): Int {
+    fun getSelectedItemId(itemName: String): Int {
         val data = this.tag as JSONArray
         for (i in 0..data.length().minus(1)) {
             val item =  data.getJSONObject(i)
             if (item.getString(itemName) == spinner.selectedItem) return item.getInt("id")
         }
         return -1
+    }
+
+    fun getSelectedItem(itemName: String): JSONObject? {
+        val data = this.tag as JSONArray
+        for (i in 0..data.length().minus(1)) {
+            val item =  data.getJSONObject(i)
+            if (item.getString(itemName) == spinner.selectedItem) return item
+        }
+        return null
     }
 
     fun getSelectedItemText() = spinner.selectedItem.toString()
@@ -102,11 +112,35 @@ class OnlineSpinner : LinearLayout {
 
     fun setOnItemSelectedListener(listener: AdapterView.OnItemSelectedListener) { spinner.onItemSelectedListener = listener }
 
+    fun setOnItemSelectedListner(itemName: String, onItemSelected: (id: Int, item: JSONObject) -> Unit) {
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                onItemSelected(getSelectedItemId(itemName), getSelectedItem(itemName)!!)
+            }
+        }
+    }
+
+    fun setOnItemSelectedListner(onItemSelected: (id: Int, item: JSONObject) -> Unit) {
+        val data = this.tag as JSONArray
+        val item = data.getJSONObject(0)
+        val itemName = item.keys().asSequence().elementAt(1)
+        setOnItemSelectedListner(itemName) {id, item -> onItemSelected(id, item) }
+    }
+
     fun getSelectedItemId(): Int {
         val data = this.tag as JSONArray
         val item = data.getJSONObject(0)
         val itemName = item.keys().asSequence().elementAt(1)
         return this.getSelectedItemId(itemName)
+    }
+
+    fun getSelectedItem(): JSONObject? {
+        val data = this.tag as JSONArray
+        val item = data.getJSONObject(0)
+        val itemName = item.keys().asSequence().elementAt(1)
+        return this.getSelectedItem(itemName)
     }
 
 }
