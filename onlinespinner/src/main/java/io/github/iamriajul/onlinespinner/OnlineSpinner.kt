@@ -116,18 +116,18 @@ class OnlineSpinner : LinearLayout {
 
     fun setOnItemSelectedListener(listener: AdapterView.OnItemSelectedListener) { spinner.onItemSelectedListener = listener }
 
-    fun setOnItemSelectedListener(itemName: String, onItemSelected: (id: Int, item: JSONObject) -> Unit) {
+    fun setOnItemSelectedListener(itemName: String, onItemSelected: (id: Int, item: JSONObject?) -> Unit) {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                onItemSelected(getSelectedItemId(itemName), getSelectedItem(itemName)!!)
+                onItemSelected(getSelectedItemId(itemName), getSelectedItem(itemName))
             }
         }
     }
 
-    fun setOnItemSelectedListener(onItemSelected: (id: Int, item: JSONObject) -> Unit) {
-        setOnItemSelectedListener(getItemName(), fun(id: Int, item: JSONObject) {
+    fun setOnItemSelectedListener(onItemSelected: (id: Int, item: JSONObject?) -> Unit) {
+        setOnItemSelectedListener(getItemName(), fun(id: Int, item: JSONObject?) {
             onItemSelected(id, item)
         })
     }
