@@ -12,6 +12,7 @@ import com.github.kittinunf.fuel.core.Request
 import com.github.kittinunf.fuel.httpGet
 import org.json.JSONArray
 import org.json.JSONObject
+import java.lang.Exception
 
 private const val TAG = "OnlineSpinner"
 class OnlineSpinner : LinearLayout {
@@ -91,7 +92,10 @@ class OnlineSpinner : LinearLayout {
                 }
                 this.tag = data
                 activity.fieldsLoaded++
-                if (activity.fieldsLoaded == activity.totalFieldsCount) activity.hideLoader()
+                if (activity.fieldsLoaded == activity.totalFieldsCount) {
+                    activity.hideLoader()
+                    activity.onOnlineSpinnerCompleted()
+                }
             } else {
                 if (BuildConfig.DEBUG) {
                     val error = "${resources.getResourceEntryName(this.id)} : ${response.statusCode} : ${response.responseMessage}";
@@ -112,7 +116,7 @@ class OnlineSpinner : LinearLayout {
 
     fun setOnItemSelectedListener(listener: AdapterView.OnItemSelectedListener) { spinner.onItemSelectedListener = listener }
 
-    fun setOnItemSelectedListner(itemName: String, onItemSelected: (id: Int, item: JSONObject) -> Unit) {
+    fun setOnItemSelectedListener(itemName: String, onItemSelected: (id: Int, item: JSONObject) -> Unit) {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onNothingSelected(parent: AdapterView<*>?) {}
 
@@ -122,25 +126,28 @@ class OnlineSpinner : LinearLayout {
         }
     }
 
-    fun setOnItemSelectedListner(onItemSelected: (id: Int, item: JSONObject) -> Unit) {
+    fun setOnItemSelectedListener(onItemSelected: (id: Int, item: JSONObject) -> Unit) {
+        setOnItemSelectedListener(getItemName(), fun(id: Int, item: JSONObject) {
+            onItemSelected(id, item)
+        })
+    }
+
+    /**
+     * @throws Exception when you try to get data before loading data.
+     */
+    private fun getItemName(): String {
+        if (this.tag !is JSONArray) throw Exception("You must load OnlineSpinner before accessing value, or You can implement the `onOnlineSpinnerCompleted` method in your activity to be safe.")
         val data = this.tag as JSONArray
         val item = data.getJSONObject(0)
-        val itemName = item.keys().asSequence().elementAt(1)
-        setOnItemSelectedListner(itemName) {id, item -> onItemSelected(id, item) }
+        return item.keys().asSequence().elementAt(1)
     }
 
     fun getSelectedItemId(): Int {
-        val data = this.tag as JSONArray
-        val item = data.getJSONObject(0)
-        val itemName = item.keys().asSequence().elementAt(1)
-        return this.getSelectedItemId(itemName)
+        return this.getSelectedItemId(getItemName())
     }
 
     fun getSelectedItem(): JSONObject? {
-        val data = this.tag as JSONArray
-        val item = data.getJSONObject(0)
-        val itemName = item.keys().asSequence().elementAt(1)
-        return this.getSelectedItem(itemName)
+        return this.getSelectedItem(getItemName())
     }
 
 }

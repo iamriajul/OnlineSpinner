@@ -25,9 +25,5 @@ class MainActivity : AppCompatActivity(), ActivityWithOnlineSpinner {
         // Change dataUrl with your real data url
         example.load(this, "http://example.com/country/all", 5)
         example2.load(this, "http://example.com/language/all", 3, "lang")
-
-        example.setOnItemSelectedListner { id, item ->
-            // get other data associated with the Json Object or pass the id to server to fetch additional data
-        }
     }
 }

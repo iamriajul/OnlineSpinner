@@ -6,4 +6,5 @@ interface ActivityWithOnlineSpinner {
 
     fun hideLoader()
     fun showLoader()
+    fun onOnlineSpinnerCompleted() {}
 }
