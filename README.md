@@ -1,3 +1,5 @@
+[![](https://jitpack.io/v/iamriajul/OnlineSpinner.svg)](https://jitpack.io/#iamriajul/OnlineSpinner)
+
 # OnlineSpinnerView
 
 help you to implement Spinner view with Online Data support + Searchable + callback and more.
