@@ -78,6 +78,29 @@ submitBtn.setOnClickListener{
     // Here is your data, You can process this data as you want.
 }
 ```
+
+Selection Change Listener with Lambda
+---
+```kotlin
+example.setOnItemSelectedListener { id, item -> 
+    
+}
+```
+
+Selection Change Listener without Lambda
+---
+```kotlin
+example.setOnItemSelectedListener(object : AdapterView.OnItemSelectedListener {
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+})
+```
+
 Implementing Callback
 ---
 ```kotlin
@@ -137,7 +160,7 @@ add dependency：
 
 ```groovy
 dependencies {
-        implementation 'com.github.iamriajul:OnlineSpinner:1.0'
+        implementation 'com.github.iamriajul:OnlineSpinner:2.0'
 }
 ```
 
