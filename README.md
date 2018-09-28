@@ -114,6 +114,12 @@ override fun hideLoader() {
 override fun showLoader() {
     // Show loading animation, or anything you want.
 }
+
+// Optional Callback // this is same as hideLoader()
+override fun onOnlineSpinnerCompleted() {
+    // Loading other text fields
+}
+
 ```
 
 Java
@@ -142,6 +148,7 @@ Name | Description
 --- | ---
 `showLoader()` | Call this method once before start calling `OnlineSpinner.load()`
 `hideLoader()` | This method will be called by the Library when all the Spinner loading will complete successfully.
+`onOnlineSpinnerCompleted()` | (Optional Override) This method will be called by the Library when all the Spinner loading will complete successfully.
 
 
 dependency
