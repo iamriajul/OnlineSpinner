@@ -67,35 +67,43 @@ class OnlineSpinner : LinearLayout {
 
     fun getSelectedItemText() = spinner.selectedItem.toString()
 
-    fun load(activity: ActivityWithOnlineSpinner, request: Request, defaultValue: Int? = null, itemName: String? = null) {
+    fun load(activity: ActivityWithOnlineSpinner, data: JSONArray, defaultValue: Int? = null, itemName: String? = null) {
+        var itemNameLocal = itemName
+        var defaultValueString: String? = null
+
+        val items = arrayListOf<String>()
+        for (i in 0..data.length().minus(1)) {
+            val item =  data.getJSONObject(i)
+            if (itemNameLocal == null) {
+                itemNameLocal = item.keys().asSequence().elementAt(1)
+            }
+            if (item.getInt("id") == defaultValue) {
+                defaultValueString = item.getString(itemNameLocal)
+            }
+            items.add(item.getString(itemNameLocal))
+        }
+
+        spinner.adapter = OnlineSpinnerArrayAdapter(this.context, android.R.layout.simple_list_item_1, items)
+        if (defaultValue != null) {
+            val selectedIndex = items.indexOf(defaultValueString)
+            spinner.setSelection(selectedIndex)
+        }
+        this.tag = data
+        activity.fieldsLoaded++
+        if (activity.fieldsLoaded == activity.totalFieldsCount) {
+            activity.hideLoader()
+            activity.onOnlineSpinnerCompleted()
+        }
+    }
+
+    fun load(activity: ActivityWithOnlineSpinner, request: Request, defaultValue: Int? = null, itemName: String? = null, callback: (data: JSONArray) -> Unit = {}) {
         var itemNameLocal = itemName
         var defaultValueString: String? = null
         request.responseJson { _, response, result ->
             if (response.statusCode == 200) {
                 val data = result.get().array()
-                val items = arrayListOf<String>()
-                for (i in 0..data.length().minus(1)) {
-                    val item =  data.getJSONObject(i)
-                    if (itemNameLocal == null) {
-                        itemNameLocal = item.keys().asSequence().elementAt(1)
-                    }
-                    if (item.getInt("id") == defaultValue) {
-                        defaultValueString = item.getString(itemNameLocal)
-                    }
-                    items.add(item.getString(itemNameLocal))
-                }
-
-                spinner.adapter = OnlineSpinnerArrayAdapter(this.context, android.R.layout.simple_list_item_1, items)
-                if (defaultValue != null) {
-                    val selectedIndex = items.indexOf(defaultValueString)
-                    spinner.setSelection(selectedIndex)
-                }
-                this.tag = data
-                activity.fieldsLoaded++
-                if (activity.fieldsLoaded == activity.totalFieldsCount) {
-                    activity.hideLoader()
-                    activity.onOnlineSpinnerCompleted()
-                }
+                load(activity, data, defaultValue, itemName)
+                callback(data)
             } else {
                 if (BuildConfig.DEBUG) {
                     val error = "${resources.getResourceEntryName(this.id)} : ${response.statusCode} : ${response.responseMessage}";
@@ -106,11 +114,11 @@ class OnlineSpinner : LinearLayout {
         }
     }
 
-    fun load(activity: ActivityWithOnlineSpinner, dataUrl: String, defaultValue: Int? = null, itemName: String? = null, vararg headers: Pair<String, Any>?) {
+    fun load(activity: ActivityWithOnlineSpinner, dataUrl: String, defaultValue: Int? = null, itemName: String? = null, vararg headers: Pair<String, Any>?, callback: (data: JSONArray) -> Unit = {}) {
         load(activity, dataUrl.httpGet().header(*headers), defaultValue, itemName)
     }
 
-    fun load(activity: ActivityWithOnlineSpinner, dataUrl: String, defaultValue: Int? = null, itemName: String? = null) {
+    fun load(activity: ActivityWithOnlineSpinner, dataUrl: String, defaultValue: Int? = null, itemName: String? = null, callback: (data: JSONArray) -> Unit = {}) {
         load(activity, dataUrl.httpGet(), defaultValue, itemName)
     }
 
