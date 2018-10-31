@@ -17,6 +17,8 @@ import java.lang.Exception
 private const val TAG = "OnlineSpinner"
 class OnlineSpinner : LinearLayout {
     private var spinner: Spinner
+    private var isOptional: Boolean = false
+    private lateinit var hint: String
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
@@ -33,6 +35,7 @@ class OnlineSpinner : LinearLayout {
             label.text = hintText
         }
         addView(label)
+        hint = label.text.toString()
 
         // setup actual spinner
         val isSearchable = ta.getBoolean(R.styleable.OnlineSpinner_isSearchable, true)
@@ -42,6 +45,8 @@ class OnlineSpinner : LinearLayout {
             AppCompatSpinner(context, attrs)
         }
         addView(spinner)
+
+        isOptional = ta.getBoolean(R.styleable.OnlineSpinner_isOptional, false)
 
         ta.recycle()
 
@@ -71,8 +76,19 @@ class OnlineSpinner : LinearLayout {
         var itemNameLocal = itemName
         var defaultValueString: String? = null
 
+        var dataFinal = data
+        // Setting Optional Item
+        if (isOptional) {
+            val dataWithSelectItem = JSONArray()
+            dataWithSelectItem.put(JSONObject("{id:0, name:'Select $hint'}"))
+            for (i in 0 until data.length()) {
+                dataWithSelectItem.put(data.getJSONObject(i))
+            }
+            dataFinal = dataWithSelectItem
+        }
+
         val items = arrayListOf<String>()
-        for (i in 0..data.length().minus(1)) {
+        for (i in 0 until dataFinal.length()) {
             val item =  data.getJSONObject(i)
             if (itemNameLocal == null) {
                 itemNameLocal = item.keys().asSequence().elementAt(1)

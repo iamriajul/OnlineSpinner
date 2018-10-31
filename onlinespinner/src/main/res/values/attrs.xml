@@ -4,5 +4,6 @@
         <attr name="hint" format="string"/>
         <attr name="isSearchable" format="boolean" />
         <attr name="title" format="string"/>
+        <attr name="isOptional" format="boolean"/>
     </declare-styleable>
 </resources>
