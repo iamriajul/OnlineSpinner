@@ -89,7 +89,7 @@ class OnlineSpinner : LinearLayout {
 
         val items = arrayListOf<String>()
         for (i in 0 until dataFinal.length()) {
-            val item =  data.getJSONObject(i)
+            val item =  dataFinal.getJSONObject(i)
             if (itemNameLocal == null) {
                 itemNameLocal = item.keys().asSequence().elementAt(1)
             }
@@ -104,7 +104,7 @@ class OnlineSpinner : LinearLayout {
             val selectedIndex = items.indexOf(defaultValueString)
             spinner.setSelection(selectedIndex)
         }
-        this.tag = data
+        this.tag = dataFinal
         activity.fieldsLoaded++
         if (activity.fieldsLoaded == activity.totalFieldsCount) {
             activity.hideLoader()
