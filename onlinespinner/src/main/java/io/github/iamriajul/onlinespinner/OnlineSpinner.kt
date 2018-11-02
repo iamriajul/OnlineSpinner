@@ -18,7 +18,7 @@ private const val TAG = "OnlineSpinner"
 class OnlineSpinner : LinearLayout {
     private var spinner: Spinner
     private var isOptional: Boolean = false
-    private lateinit var hint: String
+    private var select: String = ""
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
@@ -35,7 +35,10 @@ class OnlineSpinner : LinearLayout {
             label.text = hintText
         }
         addView(label)
-        hint = label.text.toString()
+
+        // Set Select Text
+        val selectText = ta.getString(R.styleable.OnlineSpinner_selectText)
+        select = if (selectText.isNullOrEmpty()) "Select $hintText" else selectText
 
         // setup actual spinner
         val isSearchable = ta.getBoolean(R.styleable.OnlineSpinner_isSearchable, true)
@@ -80,7 +83,7 @@ class OnlineSpinner : LinearLayout {
         // Setting Optional Item
         if (isOptional) {
             val dataWithSelectItem = JSONArray()
-            dataWithSelectItem.put(JSONObject("{id:0, name:'Select $hint'}"))
+            dataWithSelectItem.put(JSONObject("{id:0, name:'$select'}"))
             for (i in 0 until data.length()) {
                 dataWithSelectItem.put(data.getJSONObject(i))
             }
