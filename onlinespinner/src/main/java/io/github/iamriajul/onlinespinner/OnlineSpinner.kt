@@ -18,7 +18,7 @@ private const val TAG = "OnlineSpinner"
 class OnlineSpinner : LinearLayout {
     private var spinner: Spinner
     private var isOptional: Boolean = false
-    private var select: String = ""
+    private var select: String = "Select"
     constructor(context: Context) : this(context, null)
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
 
@@ -38,14 +38,14 @@ class OnlineSpinner : LinearLayout {
 
         // Set Select Text
         val selectText = ta.getString(R.styleable.OnlineSpinner_selectText)
-        select = if (selectText.isNullOrEmpty()) "Select $hintText" else selectText
+        select = if (selectText.isNullOrEmpty()) "Select" else selectText
 
         // setup actual spinner
         val isSearchable = ta.getBoolean(R.styleable.OnlineSpinner_isSearchable, true)
         spinner = if (isSearchable) {
-            SearchableSpinner(context, attrs)
+            SearchableSpinner(context)
         } else {
-            AppCompatSpinner(context, attrs)
+            AppCompatSpinner(context)
         }
         addView(spinner)
 
