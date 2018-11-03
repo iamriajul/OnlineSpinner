@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.Window
 import android.widget.*
 import com.github.kittinunf.fuel.android.extension.responseJson
@@ -50,8 +51,10 @@ class OnlineSpinner : LinearLayout {
         }
         addView(spinner)
 
-        val layout_height = attrs?.getAttributeIntValue("http://schemas.android.com/apk/res/android", "layout_height", LayoutParams.WRAP_CONTENT)
-        val layoutParams = LayoutParams(LayoutParams.MATCH_PARENT, layout_height ?: LayoutParams.WRAP_CONTENT)
+        // Setting Spinner Height Width to Match Parent
+        val layoutParams = spinner.layoutParams ?: LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT)
+        layoutParams.width = LayoutParams.MATCH_PARENT
+        layoutParams.height = LayoutParams.MATCH_PARENT
         spinner.layoutParams = layoutParams
 
         isOptional = ta.getBoolean(R.styleable.OnlineSpinner_isOptional, false)
