@@ -110,7 +110,7 @@ class OnlineSpinner : LinearLayout {
             items.add(item.getString(itemNameLocal))
         }
 
-        spinner.adapter = OnlineSpinnerArrayAdapter(this.context, android.R.layout.simple_list_item_1, items)
+        spinner.adapter = OnlineSpinnerArrayAdapter(this.context, R.layout.spinner_item, items)
         if (defaultValue != null) {
             val selectedIndex = items.indexOf(defaultValueString)
             spinner.setSelection(selectedIndex)

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity(), ActivityWithOnlineSpinner {
         // Change dataUrl with your real data url
         example.load(this, "http://example.com/country/all", 5)
         example2.load(this, "http://example.com/language/all", 3, "lang")
-        val dummyJsonArray = JSONArray("[{id:1, name: 'Item 1'}, {id:2, name: 'Item 2'}, {id:3, name: 'Item 3'}]")
+        val dummyJsonArray = JSONArray("[{id:1, name: 'Item 1'}, {id:2, name: 'Item 2'}, {id:3, name: 'Item 3'}, {id:4, name: 'A very very very long long Item 4'}]")
         example3.load(this, dummyJsonArray)
         example4.load(this, dummyJsonArray)
     }
